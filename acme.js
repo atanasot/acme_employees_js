@@ -176,22 +176,21 @@ spacer("");
 spacer("displayManagementTree");
 //given a tree of employees, generate a display which displays the hierarchy
 
-const displayManagementTree = (tree) => {
-    
-    console.log(tree.name)
-    console.log(`-${tree.reports[0].name}`)
-    console.log(`--${tree.reports[0].reports[0].name}`)
-    console.log(`---${tree.reports[0].reports[0].reports[0].name}`)
-    console.log(`-${tree.reports[1].name}`)
-    console.log(`--${tree.reports[1].reports[0].name}`)
-    console.log(`---${tree.reports[1].reports[0].reports[0].name}`)
-    console.log(`-${tree.reports[2].name}`)
-
-
-    console.log(tree.name)
-    
-    
-
+const displayManagementTree = (tree, ticks = '') => {
+    // if (Array.isArray(tree) && !tree.length) {       // Base Case
+    //     console.log("BaseCase!")
+    //     return
+    // }
+    if (!Array.isArray(tree)) {
+        console.log(tree.name)
+        displayManagementTree(tree.reports, ticks + '-')
+    }
+    else {
+        tree.forEach(obj => {
+            console.log(`${ticks}${obj.name}`)
+            displayManagementTree(obj.reports, ticks + '-')
+        })
+    }
 }
 
 displayManagementTree(generateManagementTree(employees)); /*
